@@ -22,7 +22,7 @@
       </div>
 
       <button type="submit"
-              class="mt-4 bg-cyan-500/80 hover:bg-cyan-400/90 py-3 rounded-xl font-semibold transition shadow-lg">
+              class="mt-4 bg-gradient-to-r from-cyan-500 to-fuchsia-500 py-3 rounded-xl font-semibold text-white shadow-lg hover:scale-105 transition transform">
         Se connecter
       </button>
 

@@ -1,75 +1,60 @@
 <template>
-  <section class="pt-32 px-6 pb-24 max-w-6xl mx-auto">
-    <h1 class="text-4xl font-extrabold mb-8 text-center">Matchs disponibles</h1>
+  <section class="pt-2 px-6 pb-24 max-w-7xl mx-auto">
+    <h1 class="page-title mb-20">Matchs disponibles ⚡</h1>
 
-    <h2>Matchs en cours</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Carte de match -->
-      <div
+    <!-- MATCHS EN COURS -->
+    <h2 class="section-title text-3xl font-bold text-white tracking-wide uppercase">
+      Matchs en cours
+    </h2>
+
+    <div v-if="ongoingMatches.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
+      <MatchCard
           v-for="match in ongoingMatches"
           :key="match.id"
-          class="backdrop-blur-lg bg-white/10 border border-white/10 rounded-xl p-6 shadow-lg flex flex-col justify-between"
-      >
-        <!-- Match Card -->
-          <div class="flex justify-between font-semibold mb-2">
-            <span>{{ match.teamA }}</span>
-            <span>VS</span>
-            <span>{{ match.teamB }}</span>
-          </div>
-          <div class="flex text-gray-300 text-sm mb-4 gap-4">
-            <span>scoreA : {{ match.scoreA }}</span>
-            <span>{{ new Date(match.date).toLocaleString() }}</span>
-            <span>scoreB : {{ match.scoreB }}</span>
-            <span></span>
-          </div>
-          <button
-              @click="goToPari(match.id)"
-              class="mt-auto w-full bg-cyan-500/80 hover:bg-cyan-400/90 py-2 rounded-lg font-semibold transition"
-          >
-            Parier
-          </button>
-        </div>
-      </div>
-
-    <h2>Matchs à venir</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Carte de match -->
-      <div
-          v-for="match in upcomingMatches"
-          :key="match.id"
-          class="backdrop-blur-lg bg-white/10 border border-white/10 rounded-xl p-6 shadow-lg flex flex-col justify-between"
-      >
-        <!-- Match Card -->
-        <div class="flex justify-between font-semibold mb-2">
-          <span>{{ match.teamA }}</span>
-          <span>VS</span>
-          <span>{{ match.teamB }}</span>
-        </div>
-        <div class="flex text-gray-300 text-sm mb-4 gap-4">
-          <span>scoreA : {{ match.scoreA }}</span>
-          <span>{{ new Date(match.date).toLocaleString() }}</span>
-          <span>scoreB : {{ match.scoreB }}</span>
-          <span></span>
-        </div>
-        <button
-            @click="goToPari(match.id)"
-            class="mt-auto w-full bg-cyan-500/80 hover:bg-cyan-400/90 py-2 rounded-lg font-semibold transition"
-        >
-          Parier
-        </button>
-      </div>
+          :match="match"
+          @click="goToPari(match.id)"
+      />
     </div>
 
-    <!-- Message si aucun match -->
-    <p v-if="matches.length === 0" class="text-center text-gray-400 mt-8">
+    <!-- Message si aucun match en cours -->
+    <p v-else class="text-gray-400 mt-4">
+      Aucun match en cours pour le moment.
+    </p>
+
+
+    <!-- MATCHS À VENIR -->
+    <h2 class="section-title text-3xl font-bold text-white tracking-wide uppercase mt-24">
+      Matchs à venir
+    </h2>
+
+    <div v-if="upcomingMatches.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
+      <MatchCard
+          v-for="match in upcomingMatches"
+          :key="match.id"
+          :match="match"
+          @click="goToPari(match.id)"
+      />
+    </div>
+
+    <!-- Message si aucun match à venir -->
+    <p v-else class="text-gray-400 mt-4">
+      Aucun match à venir.
+    </p>
+
+<p v-if="matches.length === 0" class="text-center text-gray-400 mt-8">
       Aucun match disponible pour le moment.
     </p>
   </section>
+
+
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+
+import MatchCard from "./MatchCard.vue";
+
 
 
 const matches = ref([]);
@@ -94,8 +79,8 @@ onMounted(async () => {
       title: item.title,
       date: item.date,
       etat: item.etat,
-      scoreA: item.score_a,
-      scoreB: item.score_b,
+      odd_a: item.odd_a,
+      odd_b: item.odd_b,
 
       // Récupération correcte du nom des équipes
       teamA: item.teamA?.name,
@@ -117,5 +102,30 @@ function goToPari(matchId) {
 </script>
 
 <style scoped>
-/* Tu peux ajouter des styles spécifiques ici si besoin */
+.section-title {
+  position: relative;
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+/* Soulignement animé */
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 60%;
+  background: linear-gradient(90deg, #00eaff, #8b5cf6);
+  border-radius: 9999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 6px #00eaff80;
+}
+
+.section-title:hover::after {
+  width: 100%;
+}
+
+
 </style>
+

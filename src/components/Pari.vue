@@ -141,68 +141,162 @@ async function placeBet() {
 
 
 <template>
-  <section class="pt-32 px-6 pb-24 max-w-2xl mx-auto">
-    <h1 class="text-4xl font-extrabold mb-8 text-center">Parier sur un match</h1>
+  <section class="pt-32 px-6 pb-24 max-w-3xl mx-auto">
 
-    <div v-if="loading" class="text-center">Chargement...</div>
+    <!-- TITRE PRINCIPAL -->
+    <h1 class="page-title mb-16">
+      Parier sur un match ⚡
+    </h1>
+
+    <div v-if="loading" class="text-center text-gray-300">Chargement...</div>
     <div v-else-if="error" class="text-center text-red-400">{{ error }}</div>
 
-    <div v-else class="backdrop-blur-lg bg-white/10 border border-white/10 rounded-xl p-8 shadow-lg flex flex-col gap-6">
-      <div class="text-center font-semibold text-xl mb-4">
-        Team {{ match!.teamA.name }} VS Team {{ match!.teamB.name }}
-      </div>
+    <!-- CARD PRINCIPALE -->
+    <div
+        v-else
+        class="bet-card relative group p-8 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl"
+    >
 
-      <div class="flex justify-between text-gray-300 mb-4 gap-20">
-        <span>Cote Team {{ match!.teamA.name }} :
-          {{ oddsTeamA !== '-' ? oddsTeamA : 'pas de cotes' }}
-        </span>
-        <span>Cote Team {{ match!.teamB.name }} :
-          {{ oddsTeamB !== '-' ? oddsTeamB : 'pas de cotes' }}
-        </span>
-      </div>
+      <!-- GLOW BACKGROUND -->
+      <div
+          class="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-60 transition"
+          style="
+          background: linear-gradient(135deg, #00eaff, #8b5cf6);
+          filter: blur(40px);
+        "
+      ></div>
 
-      <div class="text-center text-gray-400 mb-4">
-        Match nul : {{ oddsDraw !== '-' ? oddsDraw : 'pas de cotes' }}
+      <!-- CONTENU -->
+      <div class="relative z-10">
 
-      </div>
-
-      <form class="flex flex-col gap-4">
-        <label for="betAmount" class="font-semibold">Montant du pari (€)</label>
-        <input type="number"
-               id="betAmount"
-               v-model="betAmount"
-               placeholder="Ex: 50" class="p-3 rounded-lg bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-cyan-400">
-
-        <label class="font-semibold">Choisir l'équipe gagnante</label>
-        <div class="flex gap-4">
-          <label class="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg cursor-pointer hover:bg-cyan-500/30 transition text-center">
-            <input type="radio" name="team" value="teamA" v-model="selectedTeam" class="mr-2"> Team {{ match!.teamA.name }}
-          </label>
-          <label class="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg cursor-pointer hover:bg-cyan-500/30 transition text-center">
-            <input type="radio" name="team" value="draw" v-model="selectedTeam" class="mr-2">
-            Match nul
-          </label>
-          <label class="flex-1 p-3 bg-white/10 border border-white/20 rounded-lg cursor-pointer hover:bg-cyan-500/30 transition text-center">
-            <input type="radio" name="team" value="teamB" v-model="selectedTeam" class="mr-2"> Team {{ match!.teamB.name }}
-          </label>
-
+        <!-- TEAMS VS -->
+        <div class="text-center text-2xl font-bold mb-6 uppercase tracking-wider">
+          <span class="team-name">{{ match!.teamA.name }}</span>
+          <span class="vs px-4">VS</span>
+          <span class="team-name">{{ match!.teamB.name }}</span>
         </div>
 
-        <div class="text-center mt-6 text-cyan-300 font-semibold text-xl">
-          Gain potentiel : {{ potentialGain }} €
+        <!-- COTES -->
+        <div class="flex justify-between text-gray-300 mb-6 text-lg">
+          <p>🔵 Cote {{ match!.teamA.name }} :
+            <span class="text-cyan-300 font-semibold">{{ oddsTeamA }}</span>
+          </p>
+
+          <p>🔴 Cote {{ match!.teamB.name }} :
+            <span class="text-pink-300 font-semibold">{{ oddsTeamB }}</span>
+          </p>
         </div>
 
+        <p class="text-center text-gray-400 mb-6 text-lg">
+          ⚪ Match nul :
+          <span class="text-purple-300 font-semibold">{{ oddsDraw }}</span>
+        </p>
 
-        <button
-          type="button"
-          @click="placeBet"
-          class="mt-4 bg-cyan-500/80 hover:bg-cyan-400/90 py-3 rounded-xl font-semibold transition shadow-lg"
-        >
-          Placer le pari
-        </button>
-        <p v-if="message" class="text-center mt-4 text-cyan-400 font-semibold">{{ message }}</p>
-        <p v-if="errorMessage" class="text-center mt-4 text-red-500 font-semibold">{{ errorMessage }}</p>
-      </form>
+        <!-- FORM -->
+        <form class="flex flex-col gap-6">
+
+          <!-- MONTANT -->
+          <div>
+            <label class="font-semibold text-white">Montant du pari (€)</label>
+            <input
+                type="number"
+                v-model="betAmount"
+                placeholder="Ex: 50"
+                class="mt-2 w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            />
+          </div>
+
+          <!-- OPTIONS DE PARI -->
+          <label class="font-semibold text-white">Sélectionner un pronostic</label>
+          <div class="grid grid-cols-3 gap-4">
+
+            <label class="bet-option">
+              <input type="radio" name="team" value="teamA" v-model="selectedTeam" />
+              {{ match!.teamA.name }}
+            </label>
+
+            <label class="bet-option">
+              <input type="radio" name="team" value="draw" v-model="selectedTeam" />
+              Match nul
+            </label>
+
+            <label class="bet-option">
+              <input type="radio" name="team" value="teamB" v-model="selectedTeam" />
+              {{ match!.teamB.name }}
+            </label>
+
+          </div>
+
+          <!-- GAIN POTENTIEL -->
+          <div class="text-center mt-6 text-cyan-300 font-semibold text-2xl">
+            Gain potentiel : {{ potentialGain }} €
+          </div>
+
+          <!-- BOUTON -->
+          <button
+              type="button"
+              @click="placeBet"
+              class="w-full bg-gradient-to-r from-cyan-500 to-fuchsia-500 py-2 rounded-xl
+               font-semibold text-white text-center shadow-lg
+               transform transition duration-300 hover:scale-105">
+            Placer le pari
+          </button>
+
+
+
+          <!-- MESSAGES -->
+          <p v-if="message" class="text-center mt-4 text-cyan-400 font-semibold">
+            {{ message }}
+          </p>
+          <p v-if="errorMessage" class="text-center mt-4 text-red-500 font-semibold">
+            {{ errorMessage }}
+          </p>
+        </form>
+
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.page-title {
+  @apply text-5xl font-extrabold text-center text-white tracking-wide;
+  text-shadow: 0 0 10px #00eaff, 0 0 20px #8b5cf6;
+}
+
+.vs {
+  @apply text-rose-400 font-extrabold text-2xl;
+  filter: drop-shadow(0 0 6px #ff2d75);
+}
+
+.team-name {
+  @apply text-white;
+}
+
+/* Style des options de pari */
+.bet-option {
+  @apply p-4 bg-white/10 border border-white/20 rounded-xl text-center
+  cursor-pointer transition hover:bg-cyan-500/20 text-white;
+}
+
+.bet-option input {
+  @apply mr-2;
+}
+
+/* CTA */
+.bet-btn {
+  @apply w-full bg-gradient-to-r from-cyan-500 to-fuchsia-500
+  py-3 rounded-xl font-semibold text-white text-center shadow-xl
+  hover:scale-105 transition transform;
+}
+
+/* Carte */
+.bet-card {
+  transition: transform 0.3s;
+}
+
+.bet-card:hover {
+  transform: translateY(-4px);
+}
+</style>
+
