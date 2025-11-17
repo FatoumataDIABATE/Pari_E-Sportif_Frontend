@@ -21,6 +21,7 @@ Vous pouvez également installer et exécuter le projet localement en le clonant
 1. Cloner le projet :
    
 git clone https://github.com/FatoumataDIABATE/Pari_E-Sportif_Frontend.git
+
 cd Pari_E-Sportif_Frontend
 
 
