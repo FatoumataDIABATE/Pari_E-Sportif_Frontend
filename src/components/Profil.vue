@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-32 px-6 pb-24 max-w-3xl w-1/2 mx-auto">
+  <section class="pt-32 px-6 pb-24 max-w-3xl mx-auto">
     <h1 class="text-4xl font-extrabold mb-8 text-center drop-shadow-neon">
       Mon Profil
     </h1>
