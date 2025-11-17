@@ -1,6 +1,6 @@
 <template>
   <!-- SECTION PRINCIPALE DU FORMULAIRE D'INSCRIPTION -->
-  <section class="relative pt-32 px-6 pb-24 max-w-lg mx-auto z-10">
+  <section class="relative pt-32 px-6 pb-24 max-w-3xl mx-auto z-10">
 
     <!-- Fond animé derrière le formulaire -->
     <div class="absolute inset-0 pointer-events-none">

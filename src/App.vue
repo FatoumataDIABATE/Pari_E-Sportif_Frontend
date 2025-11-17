@@ -1,6 +1,5 @@
 <template>
   <div class="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-x-hidden">
-
     <div class="absolute inset-0 pointer-events-none">
       <div class="w-full h-full bg-[radial-gradient(circle_at_20%_30%,_rgba(0,234,255,0.1),_transparent_50%),radial-gradient(circle_at_80%_70%,_rgba(139,92,246,0.1),_transparent_50%)] animate-pulse-slow"></div>
     </div>
@@ -61,10 +60,17 @@ const router = useRouter();
 const isLoggedIn = ref(false);
 
 onMounted(() => {
+  checkLoginStatus();
+
+  // Écoute l'événement envoyé lors de la connexion
+  window.addEventListener("user-logged-in", checkLoginStatus);
+});
+
+function checkLoginStatus() {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   isLoggedIn.value = !!user && !!token;
-});
+}
 
 function logout() {
   localStorage.removeItem("user");

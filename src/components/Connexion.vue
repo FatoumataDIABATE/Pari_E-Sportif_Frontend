@@ -1,6 +1,6 @@
 <template>
-  <section class="pt-32 px-6 pb-24 max-w-md mx-auto">
-    <h1 class="text-4xl font-extrabold mb-8 text-center">Connexion</h1>
+  <section class="pt-32 px-6 pb-24 max-w-3xl mx-auto">
+    <h1 class="text-4xl font-extrabold mb-8 text-center drop-shadow-neon">Connexion</h1>
 
     <form @submit.prevent="loginUser"
           class="backdrop-blur-lg bg-white/10 border border-white/10 rounded-xl p-8 shadow-lg flex flex-col gap-6">
@@ -71,6 +71,9 @@ async function loginUser() {
     // Stockage dans localStorage
     localStorage.setItem("token", data.jwt);
     localStorage.setItem("user", JSON.stringify(data.user));
+
+    // 🔥 AVERTIR LE HEADER QUE L'UTILISATEUR EST CONNECTÉ
+    window.dispatchEvent(new Event("user-logged-in"));
 
     message.value = `Bienvenue ${data.user.username} 🎉`;
 

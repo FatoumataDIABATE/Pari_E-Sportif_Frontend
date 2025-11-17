@@ -146,7 +146,7 @@ async function placeBet() {
   <section class="pt-32 px-6 pb-24 max-w-3xl mx-auto">
 
     <!-- TITRE PRINCIPAL -->
-    <h1 class="page-title mb-16">
+    <h1 class="text-4xl font-extrabold mb-8 text-center drop-shadow-neon">
       Parier sur un match ⚡
     </h1>
 
