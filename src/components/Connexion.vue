@@ -35,6 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
 
 const router = useRouter();
 
@@ -51,7 +52,7 @@ async function loginUser() {
   }
 
   try {
-    const res = await fetch("http://localhost:1337/api/auth/local", {
+    const res = await fetch("${strapiEndpoint}/api/auth/local", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

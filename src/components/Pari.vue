@@ -2,6 +2,8 @@
 import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
+
 const router = useRouter();
 const message = ref('');
 const errorMessage = ref('');
@@ -57,7 +59,7 @@ const potentialGain = computed(() => {
 
 async function loadMatch() {
   try {
-    const res = await fetch(`http://localhost:1337/api/matches?populate=*`)
+    const res = await fetch(`${strapiEndpoint}/api/matches?populate=*`)
     const data = await res.json()
 
     const found = data.data.find((m: any) => m.id.toString() === props.id)
@@ -109,7 +111,7 @@ async function placeBet() {
   }
 
   try {
-    const res = await fetch("http://localhost:1337/api/bets", {
+    const res = await fetch(strapiEndpoint + "/api/bets", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

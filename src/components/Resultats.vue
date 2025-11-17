@@ -2,6 +2,8 @@
 import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
+
 const router = useRouter();
 const message = ref('');
 const errorMessage = ref('');
@@ -26,33 +28,10 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 const matchs = ref<Match[] | null>(null)
 
-// computed values
-/*const scoreTeamA = computed(() => match.value?.score_a ?? 0)
-const scoreTeamB = computed(() => match.value?.score_b ?? 0)
-const etat  = computed(() => match.value?.etat ?? 0)
-const resultat  = computed(() => match.value?.resultat ?? 0)*/
-
-// Déterminer la cote réelle choisie
-/*const selectedOdds = computed(() => {
-  if (!match.value) return 0
-
-  if (selectedTeam.value === "teamA") return match.value.odd_a?.odds ?? 0
-  if (selectedTeam.value === "teamB") return match.value.odd_b?.odds ?? 0
-  if (selectedTeam.value === "draw")  return match.value.odd_n?.odds ?? 0
-
-  return 0
-})
-
-// Calcul du gain potentiel
-const potentialGain = computed(() => {
-  if (!betAmount.value || selectedOdds.value === 0) return 0
-
-  return Number((betAmount.value * selectedOdds.value).toFixed(2))
-})*/
 
 async function loadMatch() {
   try {
-    const res = await fetch(`http://localhost:1337/api/matches?populate=*`)
+    const res = await fetch(strapiEndpoint + "/api/matches?populate=*")
 
     const data = await res.json();
 

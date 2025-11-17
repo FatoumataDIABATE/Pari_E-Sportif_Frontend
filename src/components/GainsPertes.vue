@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
 
 const router = useRouter();
 const message = ref('');
@@ -35,12 +36,9 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 const bets = ref<Bet[] | null>(null)
 
-
-
-
 async function loadMatch() {
   try {
-    const res = await fetch(`http://localhost:1337/api/bets?populate[match][populate][teamA]=true&populate[match][populate][teamB]=true`)
+    const res = await fetch(`${strapiEndpoint}/api/bets?populate[match][populate][teamA]=true&populate[match][populate][teamB]=true`)
     const data = await res.json()
 
     // Mapper mes données

@@ -55,7 +55,7 @@ import { useRouter } from "vue-router";
 
 import MatchCard from "./MatchCard.vue";
 
-
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
 
 const matches = ref([]);
 
@@ -68,7 +68,7 @@ const upcomingMatches = computed(() =>
 
 onMounted(async () => {
   try {
-    const res = await fetch("http://localhost:1337/api/matches?populate=*");
+    const res = await fetch(strapiEndpoint + "/api/matches?populate=*");
     if (!res.ok) throw new Error("Erreur lors de la récupération des matchs");
 
     const data = await res.json();
