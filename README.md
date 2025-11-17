@@ -23,6 +23,8 @@ Vous pouvez également installer et exécuter le projet localement en le clonant
 git clone https://github.com/FatoumataDIABATE/Pari_E-Sportif_Frontend.git
 cd Pari_E-Sportif_Frontend
 
+
+
 Structure du projet :
 
 <img width="472" height="590" alt="image" src="https://github.com/user-attachments/assets/f5c8681c-ae0a-43c2-9b1f-0f8107bf3723" />
