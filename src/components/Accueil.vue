@@ -77,13 +77,13 @@
       <p class="opacity-80 mb-8 max-w-xl mx-auto">
         Crée un compte et commence à suivre tes équipes et joueurs favoris.
       </p>
-      <a
-          href="#register"
+      <RouterLink
+          to="/inscription"
           class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-lg rounded-xl
                hover:scale-105 transition transform font-semibold shadow-lg"
       >
         S'inscrire
-      </a>
+      </RouterLink>
     </section>
   </div>
 </template>
@@ -93,3 +93,5 @@
   text-shadow: 0 0 8px #00eaff, 0 0 16px #00eaff, 0 0 32px #8b5cf6;
 }
 </style>
+<script setup lang="ts">
+</script>
