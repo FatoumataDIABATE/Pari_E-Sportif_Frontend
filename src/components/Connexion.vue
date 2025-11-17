@@ -52,7 +52,7 @@ async function loginUser() {
   }
 
   try {
-    const res = await fetch("${strapiEndpoint}/api/auth/local", {
+    const res = await fetch(strapiEndpoint + "/api/auth/local", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

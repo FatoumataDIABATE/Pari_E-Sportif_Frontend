@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:1337/api";
+const strapiEndpoint = import.meta.env.VITE_STRAPI_API_URL;
+
+const API_URL = strapiEndpoint + "/api";
 
 export async function registerUserApi({ username, email, password }) {
     try {
